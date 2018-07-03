@@ -27,6 +27,14 @@ a^b a와 b의 비트를 xor연산
 
 ############################################################################
 180703
+순차 자료형 (Sequence) 내장 함수:enumerate
+    순차 자료형에서 현재 아이템의 색인과 함께 처리하고자 할 때 흔히 사용
+
+
+순차 자료형(Sequence) 내장 함수:range
+
+range({start=0,}end{,step=1})
+start부터 end까지의 순차적 리스트를 step 간격으로 생성
 
 ############################################################################
 '''
@@ -68,11 +76,16 @@ def BitCalculate(a,b,c):
         print(bin(a|b))
 ############################################################################
 #180703
-#순차 자료형(Sequence) 내장 함수:range
-'''
-range({start=0,}end{,step=1})
-start부터 end까지의 순차적 리스트를 step 간격으로 생성
-'''
+def Sequence_Enumerate(i):
+    print(Sequence_Range)
+    for value in['red','yellow','blue','white','grey']:
+        print('{0}:{1}'.format(i,value))
+        i+=1
+    #비교 : enumerate 함수를 사용했을 때
+
+    for i,value in enumerate(['red','yellow','blue','white','grey']):
+        print('{0}:{1}'.format(i,value))
+        
 def Sequence_Range():
     print(Sequence_Range())
 ############################################################################
@@ -81,6 +94,7 @@ def Sequence_Range():
 
 
 ############################################################################
+'''
 #main
 a,b=10.5,3
 #complex 함수를 활용해 복소수타입 생성 가능
@@ -95,5 +109,8 @@ Type(cpx)
 IntC(a)
 a,b,c=16,2,0
 BitCalculate(a,b,c)
-
+'''
+#20180703
+i=0
+Sequence_Enumerate(i)
 ############################################################################
