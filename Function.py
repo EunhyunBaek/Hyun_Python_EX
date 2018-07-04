@@ -109,6 +109,12 @@ def get_total(*args):
     for x in args:
         sum +=x
     return sum
+def get_total2(*args):
+    sum = 0
+    #list 인자값 받아서 정수형으로 더할 수 있도록 해결하기
+    for x in args:
+            sum += x
+    return sum
 def f(a,b,*args,**kwd):
     print(a,b)
     print(args)
@@ -155,8 +161,10 @@ print(area(10,12))
 print(area(height=4,width=3))#==area(3,4)
 
 print(get_total(1,3,5,7,9))
-
-f(10,20,30,40,depth= 10,dimension=3)
+#print("total2")
+#print(get_total(range(0,100,2)))
+print("ffffffffff")
+f(10,20,30,40,depth= 10,dimension=3,hell=4)
 
 states = ['Alabama', ' Georgia', 'Georgia ', 'georgia', 'FlOrIda',
 'south carolina ', 'West virginia']
