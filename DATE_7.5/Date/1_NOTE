@@ -1,0 +1,67 @@
+날짜와 시간
+    날짜와 시간은 파이썬에서 기본으로 제공하는 자료형에는 포함되어 있지 않지만 중요한 자료형
+    날짜와 시간은 각각 date 객체, time 객체를 이용하며 이들 객체는 datetime 모듈에 포함되어 있다
+        import datetime 을 이용, 해당 모듈을 불러올 수 있다
+        주요 클래스
+            datetime    : 날짜와 시간을 모두 포함하는 클래스
+            date        : 날짜 관련 클래스
+            time        : 시간 관련 클래스
+날짜와 시간: 날짜와 시간의 획득
+    datetime 모듈 내 datetime 클래스의 now() 메서드를 이용하면 현재 날짜와 시간을 획득 할 수 있다
+    date 클래스 생성자로 직접 날짜를 지정할 수 있다
+        년, 월, 일, 시 ,분, 초, 마이크로초 순으로 매개변수를 전달하면 되며, 최소 년월일은 지정해 주어야 한다.
+날짜와 시간: datetime 클래스
+    datetime 클래스의 주요 속성
+        속성            설명
+        year            년
+        month           월
+        day             일
+        hour            시
+        minute          분
+        second          초
+        microsecond     마이크로초
+날짜와 시간:datetime 클래스
+    datetime 클래스의 주요 메서드
+        메서드              설명
+        weekday()           요일을 반환
+        strftime()          datetime 을 문자형으로 포맷
+        date()              날짜 정보만 가지는 date 클래스로 변환
+        time()              시간 정보만 가지는 time 클래스로 변환
+    date는 datetime 클래스의 날짜 관련 속성과 요일 메서드를 이용 가능
+    time은 datetime 클래스의 시간 관련 속성 이용 가능
+날짜와 시간: datetime의 비교와 두 datetime의 차이 구하기
+    두 개의 날짜는 대소 비교, 차이 값을 구할 수 있다.
+    두 날짜의 차이는 datetime.timedelta 클래스로 반환,날짜의 차이를 구할 수 있다.
+    #H_DATE_TIME
+날짜와 시간: timedelta
+    timedelta 클래스의 주요 속성
+        days:일수
+        seconds:초(0~863999)
+        microseconds: 마이크로초 (0~999999)
+    timedelta 클래스의 메서드
+        total_seconds():모든 속성을 초단위로 모아서 변환
+    두 datetime의 차이가 timedelta로 반환되었던 것과 반대로 datetime 클래스에 timedelta 값을 더해 새로운 날짜를 만들 수도 있다.
+날짜와 시간:timedelta
+    datetime과 timedelta의 합산
+    #H_DATE_PLUS
+날짜와 시간:datetime을 문자열로 변환
+    datetime의 strftime 메서드를 이용하면 datetime 형식을 문자열로 변환할 수 있다.
+    strftime의 출력 형식 기호
+        기호                표시되는형식
+        %Y                  서기 년도 4자리 표시
+        %y                  서기 년도 2자리 표시
+        %m                  달을 두자리로 표시
+        %d                  일을 두자리로 표시
+        %B                  영어로 달을 표시
+        %b                  영어로 달을 단축 표시
+        %A                  영어로 요일을 표시
+        %a                  영어로 요일을 단축 표시
+        %H                  시간 표시(24시간)
+        %I                  시간 표시(12시간)
+        %p                  AM/PM 표시
+        %M                  분을 두 자리로 표시
+        %S                  초를 두 자리로 표시
+        %f                  마이크로초를 6자리수로
+날짜와 시간:datetime을 문자열로 변환
+    다양한 형식으로 datetime을 문자열로 포맷하기
+        #H_DATE_STRFTIME
