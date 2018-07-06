@@ -1,0 +1,35 @@
+#로거, 핸들러, 포맷터 설정
+[loggers]
+keys= root,infoLogger
+
+[handlers]
+keys=simpleHandler,fileHandler
+
+[formatters]
+keys=simpleFormatter
+
+#root 로거 설정
+[logger_root]
+level=NOTSET
+handlers=simpleHandler,fileHandler
+
+#자체 로거 설정
+[loger_infoLogger]
+level=INFO
+handlers=simpleHandler,fileHandler
+qualname=__main__
+propagate=1     #해당 로거에 의해 출력될 록 ㅡ레코드를 부모에게 전달할 것인지 결정. 1:전달 , 0:전달하지 않음
+
+[handler_simpleHandler]
+class=StreamHandler
+formatter=simpleFormatter
+args=(sys.stdout,)          # 시스템 표줄 출력을 통해 출력
+
+[handler_fileHandler]
+class=fileHandler
+formatter=simpleFormatter
+args=('python.log','w')     # 파일에 출력
+
+[]formatter_simpleFormatter
+format=%(asctime)s - %(name)s - %(levelname)-8s - %(message)s
+datefmt=        #날짜 출력 포맷을 위한 설정. 비워두면 파이썬 기본 포맷으로 출력
