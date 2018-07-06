@@ -31,11 +31,11 @@ for key in sys.modules.keys():
 
 (venv) D:\hyun_py>cd Hyun_Python_EX
 
-(venv) D:\hyun_py\Hyun_Python_EX>cd DATE_7.5
+(venv) D:\hyun_py\Hyun_Python_EX>cd DATE_7_5
 
-(venv) D:\hyun_py\Hyun_Python_EX\DATE_7.5>cd Module
+(venv) D:\hyun_py\Hyun_Python_EX\DATE_7_5>cd Module
 
-(venv) D:\hyun_py\Hyun_Python_EX\DATE_7.5\Module>python Fibo.py 50
+(venv) D:\hyun_py\Hyun_Python_EX\DATE_7_5\Module>python Fibo.py 50
 메인콜
 1
 1
