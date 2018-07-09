@@ -1,0 +1,646 @@
+웹 프로그래밍
+
+python 기반의 웹 프레임워크 django
+https://www.djangoproject.com/
+
+django 서버 구동
+python -c "import django;
+print (django.get_version()):설치 확인
+django-admin start
+
+////////////////////////////////////////////////////////////////////////
+# 함수
+
+# 인자값은 있지만 반환값은 없는 함수
+def myfunc(name):
+	print("Hello", name)
+
+myfunc(input('이름 입력!:'))
+
+# 인자값, 반환값 모두 있는 함수
+def sum(a, b):
+	return (a+b)
+
+sum(4, 5)
+
+# 반환값을 표기하지 않은 함수의 반환값(None)
+def no_return():
+	print("안녕!")
+	return
+print(no_return)
+
+# 기본 인자값 활용
+
+list(range(10))
+list(range(5, 10))
+list(range(0, 10, 2))
+
+def daily_sleeping_hour(hours=7):
+	return hours
+
+daily_sleeping_hour() # 인자값 없음
+
+def daily_workng_hour(hour=None):
+	if hour == None:
+		print('인자값 설정 누락...")
+	return hours
+
+daily_workng_hour()
+===>
+
+# 여러개의 인자값 및 키워드 인자값 사용
+def intro_mycar(manu, seats=4, type="sedan"):
+	print('내차는', manu, '의', seats, '인승', type, '이다.')
+
+intro_mycar('현대')
+intro_mycar(manu='기아')
+intro_mycar(manu='기아', type='SUV')
+intro_mycar(type='SUV', manu='기아')
+intro_mycar('Audi', 2, '스포츠카')
+intro_mycar('Audi', seats=2)
+intro_mycar() # 필수 인자값 manu 누락
+intro_mycar(manu='현대', 2) # 키워드 인자값 뒤에 키워드없는 인자값 사용 불가
+intro_mycar('기아', manu='현대') # 같은 매개변수에 중복 인자값 대입 불가
+intro_mycar(color='회색')
+
+
+def intro_mycar(manu, seats=4, type="sedan"):
+	print('내차는', manu, '의', seats, '인승', type, '이다.')
+
+input = {'manu': '현대', 'seats':9, 'type':'승합차'}
+
+intro_mycar(**input)
+
+
+# ================================================
+
+def my_func():
+	""" 여기에 함수에 대한 상세 설명(function document)을 넣습니다.
+	여러 줄 들어갈 수 있으며, 함수의 내장 변수(__doc__)를 사용하여
+	출력할 수 있습니다.
+	"""
+	pass
+
+print(my_func.__doc__)
+
+# ================================================
+
+# 클래스
+
+var = '파이썬 프로그래밍'
+id(var)
+type(var)
+str
+type(str)  # str 클래스는 type 클래스의 객체
+type(type) # type 도 type 클래스의 객체
+id(str)
+
+var.__class__ # var 객체의 지역변수 __class__
+var.replace('파이썬', 'Python')
+
+# 클래스 설계
+
+class Employee {
+	private int no;
+	private String name;
+	private String department;
+
+	public Employee(int no, String name, String department){
+		this.no = no;
+		this.name = name;
+		this.department = department;
+}
+
+Employee e = new Employee(001, "pmk", "R&D");
+
+
+class BookReader:
+	name = str()
+	read_book():
+		print(name + ' is reading Book!')
+
+reader = BookReader()  # 객체 생성
+type(reader)           # __main__ : 현재 클래스가 생성된 위치. 이 클래스 호출 유효범위 의미
+reader.name = 'pmk'
+reader.read_book() # self(this)가  이미 존재하므로 error!
+                   # 객체 생성시 본인의 객체를 인자값으로 넘겨 함수 내에서 클래스 멤버 접근 가능하게 함
+class BookReader:
+	name = str()
+	def read_book(self):
+		print(self.name + ' is reading Book!')
+
+reader = BookReader()
+reader.name = 'pmk'
+reader.read_book()
+
+# __init__ : 객체 초기화 함수의 재정의
+
+dir(BookReader)
+
+class BookReader:
+	def __init__(self, name):
+		self.name = name
+	def read_book(self):
+		print(self.name + ' is reading Book!')
+
+reader = BookReader()  # error! : name 이라는 필수 인자 누락됨
+reader = BookReader('pmk')
+reader.read_book()
+
+
+# 클래스 변수, 인스턴스 변수
+class BookReader:
+	country = 'South Korea' # 변수 추가, 클래스 변수
+	def __init__(self, name):  # name : 인스턴스 변수
+		self.name = name
+	def read_book(self):
+		print(self.name + ' is reading Book!')
+
+reader1 = BookReader('pmk')
+reader2 = BookReader('khk')
+reader1.country
+reader2.country
+reader1.read_book()
+reader2.read_book()
+
+# Information hiding, Name Mangling : 접근 제어자
+class BookReader:
+	country = 'South Korea'
+
+dir(BookReader)
+
+class BookReader:
+	__country = 'South Korea'  # 접근 제한(private)
+
+dir(BookReader)  # _BookReader__country 로 변형됨
+
+BookReader.__country # Attribute Error!
+
+class BookReader:         # 클래스 변수의 수정
+	__country = 'South Korea'
+	def set_country(self, country):   # setter
+		self.__country = country
+	def get_country(self)				# getter
+		return self.__country
+
+br = BookReader()
+br.get_country()
+br.set_country('USA')
+br.get_country()
+
+# 상속(Inheritance)
+class BookReader:
+	country = 'South Korea' # 변수 추가, 클래스 변수
+	def __init__(self, name):  # name : 인스턴스 변수
+		self.name = name
+	def read_book(self):
+		print(self.name + ' is reading Book!')
+
+class GuitarPlayer:
+	country = 'South Korea' # 변수 추가, 클래스 변수
+	def __init__(self, name):  # name : 인스턴스 변수
+		self.name = name
+	def play(self):
+		print(self.name + ' is playing Guitar!')
+
+class Human:
+	country = 'South Korea' # 변수 추가, 클래스 변수
+	def __init__(self, name):  # name : 인스턴스 변수
+		self.name = name
+
+
+class BookReader(Human):  # Human 클래스 상속
+	def read_book(self):
+		print(self.name + ' is reading Book!')
+
+class GuitarPlayer(Human):  # Human 클래스 상속
+	def play(self):
+		print(self.name + ' is playing Guitar!')
+
+
+
+class Human:
+	country = 'South Korea'
+	def __init__(self, name):  # name : 인스턴스 변수
+		self.name = name
+	def eat(self):			# 상위 클래스인 Human에 새로운 메소드 추가
+		print(self.name + ' is eating')
+
+class BookWriter(Human):  # Human 클래스 상속
+	def write_book(self):
+		print(self.name + ' is writing Book!')
+bw = BookWriter('pmk')
+bw.write_book()
+bw.eat()
+
+bw.__class__
+BookWriter.__class__
+BookWriter.__bases__   # BookWriter의 부모 클래스
+Human.__class__
+Human.__bases__
+
+# 다중 상속(Multiple Inheritance)
+
+class Developer:
+	def coding(self):
+		print(self.name + ' is developer')
+
+class ProgramBookWriter(Human, Developer):   # 다중 상속
+	def write_book(self):
+		print(self.name + ' is writing book')
+
+pwb = ProgramBookWriter('pmk')
+pwb.eat()
+pwb.coding()
+pwb.write_book()
+ProgramBookWriter.__bases__
+
+# 다형성(Polymorphism)
+
+class Developer:
+	def __init__(self, name):
+		self.name = name
+	def coding(self):
+		print(self.name + ' is developer')
+
+class PythonDeveloper(Developer):   # 다형성 구현
+	def coding(self):
+		print(self.name + ' is Python developer')
+
+class JavaDeveloper(Developer):
+	def coding(self):
+		print(self.name + ' is Java developer')
+
+class CppDeveloper(Developer):
+	def coding(self):
+		print(self.name + ' is C++ developer')
+
+pd = PythonDeveloper('pmk')
+jd = JavaDeveloper('aaa')
+cd = CppDeveloper('bbb')
+
+pd.coding()
+jd.coding()
+cd.coding()
+
+class CppDeveloper(Developer):
+	def coding(self):
+		super.coding()          # 부모 클래스에 있는 함수 호출
+		print(self.name + ' is Python developer')
+
+cd = CppDeveloper('bbb')
+cd.coding()  # 부모 클래스 메소드 출력 결과, 자식 클래스 메소드 출력 결과!!
+
+# ===========================================================
+
+# JSON으로 저장하고 가져오기
+
+myinfo = {'name': 'pmk', 'job':'programmer', 'language':['Kor', 'Eng']}
+import json
+with open('./data/myinfo.json', 'w') as f:
+	json.dump(myinfo, f)
+with open('./data/myinfo.json',  'r') as f:
+	newinfo = json.load(f)
+
+print(newinfo)
+
+# JSON으로 여러 한글 데이터 저장하기
+
+books = list()
+
+# 책 목록 만들기
+books.append({'제목':'개발자의 코드', '출판연도':'2013.02.28', '출판사':'A', '쪽수':200, '추천유무':False})
+books.append({'제목':'클린 코드', '출판연도':'2013.03.04', '출판사':'B', '쪽수':584, '추천유무':True})
+books.append({'제목':'빅데이터 마케팅', '출판연도':'2014.07.02', '출판사':'A', '쪽수':296, '추천유무':True})
+books.append({'제목':'구글드', '출판연도':'2010.02.10', '출판사':'B', '쪽수':526, '추천유무':False})
+books.append({'제목':'강의력', '출판연도':'2013.12.12', '출판사':'A', '쪽수':248, '추천유무':True})
+
+for book in books:  # 책 한 권씩 꺼내기 위한 루프 선언
+    print(book)     # 책 한 권 데이터 출력
+
+# 파일에 저장하기
+import json
+with open('./data/my_books.json', 'w') as  f:
+	json.dump(books, f)
+
+# json 파일 확인
+with open('./data/my_books.json', 'r') as  f:
+	new_books = json.load(f)
+
+for book in new_books:
+	print(book)
+
+with open('./data/my_books_kor.json', 'w') as f:
+	json.dump(books, f, ensure_ascii=False)    # 한글로 저장
+
+
+#===========================================================
+# =============================================================
+
+# 모듈
+math.pi
+
+import math
+math.pi
+math.pow(2, 5)
+
+# 피보나치 수열을 위한 모듈
+
+def fib(n):    			# n 까지의 피보나치 수열을 출력 하는 함수
+    a, b = 0, 1
+    while b < n:
+        print(b, end=' ')	# end 기본 값인 줄 넘기기 대신 공백으로 한 줄에 출력
+        a, b = b, a+b
+    print()			# 줄 넘기기
+
+def fib2(n): 			# n 까지의 피보나치 수열을 반환 하는  함수
+    result = []			# 피보나치 수 저장을 위한 리스트 초기화
+    a, b = 0, 1
+    while b < n:
+        result.append(b)	# 리스트 값 채우기
+        a, b = b, a+b
+    return result		# 피보나치 수 리스트 반환
+
+import fibo
+fibo.fib(20)
+
+fib = fibo.fib
+fib(20)
+
+type(fib)
+
+from fibo import fib, fib2
+fib(100)
+
+from fibo import fib as f1, fib2 as f2
+f1(500)
+
+
+
+# 작성 후 다른이름으로 저장(fibo)
+
+if __name__ == "__main__":	# 외부에서 호출 시
+    import sys
+    fib(int(sys.argv[1]))	# 첫 번째 외부 인자 값을 사용하여 fib 호출
+
+# 윗 문장 추가 후 윈도우 프롬프트에서 다음과 같이
+D:\python fibo.py 50  # 커맨드 라인 인자. 50이 argv[1]에 저장됨
+
+import fibo
+fibo.fib(20)
+................
+
+fib = fibo.fib
+fib(50)
+type(fib)  # <class 'function'> 파이썬에서는 함수도 function 이라는 클래스에 의해 생성된 객체임.
+from fibo import fib, fib2 # 이후 모듈명 생략 가능
+fib(500)
+from fibo import fib as f1, fib2 as f2
+f1(500)
+f2(500)
+from fibo import * # _로 시작하는함수를 제외한모든 함수를 가져오며, 함수명 만으로 호출 가능
+
+
+
+# =================================================
+
+
+# 입출력 / 로깅(디버깅을 위한)
+
+print('Hello!~')
+print('Hello!~', 'pmk')
+
+print('Hello, {}!'.format('pmk'))
+
+name = input('이름 입력: ')
+print('Hello, {}!'.format(name))
+
+name = input('이름 입력: ')
+job = input('직업 입력: ')
+print('{}의 직업은 {}'.format(name, job))
+
+print('{0}의 직업은 {1}'.format(name, job))  # {} 내에 인덱스 표기 가능
+print('훌륭한 {1}, {0}.'.format(name, job)) # 인덱스로 출력 순서 지정
+print('Good {j}, {n}.'.format(n=name, j=job)) # 변수명 사용
+print('{0}은 {lang} {1}.'.format(name, job, lang='Python')) # 인덱스와 변수명 함꼐 사용
+
+# 여러가지 포맷
+
+'{0} - {1} - {2}'.format(*'ABC')   # 튜플, 리스트형 데이터를 자동 언팩킹하여 출력
+'{0} - {1} - {2}'.format(*['A', 'B', 'C'])
+'{0[0]} - {0[1]} - {0[2]}'.format(['A', 'B', 'C'])  #리스트형
+'{0[name]}'.format({'name':'pmk', 'last_name':'paek'}) # dict형
+
+'{:<20}'.format('좌측 정렬') # 정렬
+'{:>20}'.format('우측 정렬')
+'{:^20}'.format('중앙 정렬')
+
+import math
+print('원주율은 대략 {:f} 입니다.'.format(math.pi))
+print('원주율은 대략 {:.2f} 입니다.'.format(math.pi))
+
+'{:+f}; {:+f}'.format(3.14, -3.14) # 양수, 음수 기호 반드시  출력
+'{: f}; {: f}'.format(3.14, -3.14) # 기호는 공백, 음수 기호만 출력
+'{:-f}; {:-f}'.format(3.14, -3.14) # 기호는 공백, 음수 기호만 출력
+
+'{:,}'.format(10000000) # 천단위 구분자
+'{:%}'.format(5/12)     # 백분율
+'{:.2%}'.format(5/12)   # 백분율 자릿수 지정
+
+#=============================================================
+
+# 로깅(Logging)
+# - 정의 : 프로그램이 실행될 때 일어나는 이벤트를 추적하기 위한 용도로 소스코드에 삽입하는
+#         출력문을 작성하는 것. 결과로 발생하는 출력문을 로그라고 함.
+
+# 로그 레벨: Debug > Info > Warning > Error > Critical (개발자는 주로 Debug 레벨)
+
+import logging
+logging.warning('조심!!')
+logging.info('정보 확인 요!')  # 출력되지 않음. 파이썬의 기본 로거는 root 이며,
+                            # 로그 레벨은 Warning 이므로 낮은 레벨인 Info, debug는 출력하지 않는다.
+logging.root.setLevel(logging.DEBUG) # 로그 레벨 변경
+logging.info('정보 확인 바람!') # info 메시지 출력됨
+
+# 로깅 관련 객체
+# - Logger: 파이썬 모듈 단위로 로거 생성. 모든 로거는 root 로거의 자식
+# - Handler: 로거에 의해 생성된 log record를 적절한 곳에 출력(콘솔, 파일, DB 등).
+#            로거는 여러개의 핸들러 보유
+# - Formatter: 로그 출력 포맷 결정
+
+logger = logging.getLogger(__name__)  # 로거 생성
+logger.warning('문제가 생길지도 모름')
+
+# logger_example.py
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)-8s - %(message)s')
+
+# 설정 파일을 이용한 로깅
+# logging.conf
+# logging_conf_example.py
+
+# 실행 후 콘솔 출력 확인 및 log 파일 확인
+
+# ================================================================
+
+
+# 단위 테스트 / 디버깅
+# common.py, common_tests.py, common_tests_2.py
+
+
+#=================================================================
+
+# Database 연동
+
+# 테이블 생성
+import sqlite3
+
+def create_table():
+	conn = sqlite3.connect('my_book.db')
+
+	cur = conn.cursor()  # 커서 획득
+	cur.execute('''create table my_booksb(
+					title text,
+					published_date text,
+					publisher text,
+					pages integer,
+					recommendation integer
+				)'''
+	)
+
+	conn.commit()
+	conn.close()
+
+if __name__ == "__main__":
+	create_table()
+
+# 데이터 입력
+import sqlite3
+
+def insert_books():
+	conn = sqlite3.connect('my_book.db')
+	cur = conn.cursor()
+	cur.execute("insert into my_books values('개발자의코드', '2013.02.28', 'A', 200, 0)")
+	# insert_sql = 'insert into my_books values(?, ?, ?, ?, ?)'
+	# cur.execute(insert_sql, ('클린코드', '2010.03.04', 'B', 584, 1)")
+
+	books = [
+        ('빅데이터 마케팅', '2014.07.02','A', 296, 1),
+        ('구글드', '2010.02.10','B', 526, 0),
+        ('강의력', '2013.12.12','A', 248, 1)
+    ]
+
+# 여러 데이터 입력
+    cur.executemany(insert_sql, books)
+
+    conn.commit()       # 데이터베이스 반영
+
+    conn.close()        # 커넥션 닫기
+
+
+if __name__ == "__main__":		# 외부에서 호출 시
+    insert_books()
+
+
+# my_books_in_db.py -- DB 연결, 테이블 생성
+# insert.py -- 데이터 삽입
+# select.py -- 데이터 조회
+# update.py -- 데이터 수정
+# delete.py -- 데이터 삭제
+
+#=================================================================
+#==================================================================
+
+# 웹 프로그래밍
+
+# Python 기반의 웹 프레임워크 Django
+# https://www.djangoproject.com/
+
+# Django 서버 구동
+# python -c "import django; print(django.get_version())" : 설치 확인
+# django-admin startproject project-name  : 프로젝트 생성
+# cd project-name
+#	python manage.py runserver : 웹 서버 구동
+
+# http://127.0.0.1:8000  : chrome에서
+
+# Django로 웹에 출력하기
+# python manage.py startapp hello : hello 프로젝트 생성
+
+# views.py
+from django.http import HttpResponse
+def index(request):
+	return HttpResponse("Hello world!~")
+
+# hello 폴더 밑에 urls.py 파일 생성
+from django.conf.urls import url
+from . import views # views는 위에서 작성한 views.py가 들어 있는 폴더
+# url 패턴 추가
+urlpatterns = [
+	url(r'^$', views.index, name='index')'
+]
+
+# project-name 패키지 밑에 있는 urls.py 파일 수정
+url(r'^hello/', include('hello.urls')),   # 17번쨰 줄에 include
+
+# Djangp 서버 구동
+# python manage.py runserver : 서버 재실행
+
+# 웹 브라우저에서 실행
+# http://127.0.0.1:8000/hello/ : views.py에 입력한 문자열이 웹 브라우저에 출력
+
+
+
+# ================================================================
+
+# 데이터 분석 : Jupyter notebook에서
+
+# ipynb 파일 생성.
+
+# Numpy : 데이터 분석 위한 기초적 기능 제공 라이브러리
+#     N 차원 배열 객체(ndarray)
+
+# Pandas : 데이터 분석 라이브러리
+#     Series, DataFrame 와 같은 데이터 구조 제공
+#     Excel, csv 파일 읽고쓰기 함수, 데이터 시각화 함수 제공
+#     Numpy로 만들어진 배열 형태의 데이터를 원하는 형태로 가공하여 데이터프레임을 만든 후 시각화 할 수 있도록 함.
+
+# Matplotlib : 데이터 시각화 라이브러리
+#     선형, 막대, 히스토그램, 파이 그래프
+#     Jupyter notebook에서 실행 결과 바로 출력 가능
+
+
+
+%matplotlib inline     # 그래프 바로 출력 위한 명령어
+import numpy as np
+import pandas as pd
+import matplotlib
+
+data = np.random.rand(50)   # 50개 난수 데이터 생성
+data  # 데이터 확인
+
+seri = pd.Series(data)  # pandas의 Series 형 데이터로 변환
+seri   # 데이터 확인
+
+seri.plot()    # 선형 그래프 출력
+
+matplotlib.style.use('ggplot')  # 그래프 스타일 변경
+seri.plot()          # 선형 그래프 재 출력
+
+data_set = np.random.rand(20, 3)   # 3개의 난수로 구성된 20개 배열 데이터세트 생성
+data_set    # 데이터 확인
+
+df = pd.DataFame(data_set, columns=['A', 'B', 'C'])    # 데이터프레임 생성
+df   # 데이터프레임 확인
+
+df.plot()   # 선형 그래프 그리기
+df.plot(kind='bar')  # 막대 그래프 그리기
+df.plot(kind='barh')  # 가로 막대 그래프 그리기
+df.plot(kind='area')  # 누적 영역 그래프 그리기
+df.plot(kind='area', stacked=False)  # 누적되지 않은 영역 그래프 그리기
+
+# 파이 그래프 위한 5개 난수 발생 및 데이터프레임 생성
+seri2 = pd.Series(np.random.rand(5), index=['a', 'b', 'c', 'd', 'e'], name='Series')
+seri2.plot(kind='pie', autopct='%.2f', figsize=(7,7))  # 파이 그래프 작도
+
+# =========================================================================
